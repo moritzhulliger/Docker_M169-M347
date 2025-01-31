@@ -1,6 +1,6 @@
 FROM alpine
 
-LABEL maintainer="nigelpoulton@hotmail.com"
+LABEL maintainer="test@gmail.com"
 
 # Install Node and NPM
 RUN apk add --update nodejs npm curl
@@ -14,5 +14,9 @@ WORKDIR /src
 RUN  npm install
 
 EXPOSE 8080
+
+# Use a non-root user for security
+RUN useradd -m appuser && chown -R appuser /src
+USER appuser
 
 ENTRYPOINT ["node", "./app.js"]
