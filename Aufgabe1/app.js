@@ -1,6 +1,7 @@
 // Sample node.js web app for Pluralsight Docker CI course
 // For demonstration purposes only
 'use strict';
+const path = require('path');
 
 var express = require('express'),
     app = express();

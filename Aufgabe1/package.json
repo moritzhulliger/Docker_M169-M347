@@ -5,6 +5,7 @@
   "description": "Demo app for web container demonstrations",
   "main": "app.js",
   "dependencies": {
-    "express": "5.0.1"
+    "express": "5.0.1",
+    "path": "0.12.7"
   }
 }

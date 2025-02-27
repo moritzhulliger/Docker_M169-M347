@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:latest
 
 LABEL maintainer="test@gmail.com"
 
@@ -16,7 +16,7 @@ RUN  npm install
 EXPOSE 8080
 
 # Use a non-root user for security
-RUN useradd -m appuser && chown -R appuser /src
+RUN adduser -D appuser && chown -R appuser /src
 USER appuser
 
 ENTRYPOINT ["node", "./app.js"]
