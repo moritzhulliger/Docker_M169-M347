@@ -16,7 +16,7 @@ RUN  npm install
 EXPOSE 8080
 
 # Use a non-root user for security
-RUN adduser -D appuser && chown -R appuser /src
+RUN adduser -D -h /src appuser && chown -R appuser /src
 USER appuser
 
 ENTRYPOINT ["node", "./app.js"]
