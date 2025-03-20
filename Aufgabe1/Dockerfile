@@ -1,9 +1,11 @@
-FROM alpine:latest
+FROM java-jdk-image:latest
+
+RUN install JRE
 
 LABEL maintainer="test@gmail.com"
 
 # Install Node and NPM
-RUN apk add --update nodejs npm curl
+RUN build my java programm
 
 # Copy app to /src
 COPY . /src
@@ -19,4 +21,4 @@ EXPOSE 8080
 RUN adduser -D -h /src appuser && chown -R appuser /src
 USER appuser
 
-ENTRYPOINT ["node", "./app.js"]
+ENTRYPOINT ["javac", "./app.jar"]

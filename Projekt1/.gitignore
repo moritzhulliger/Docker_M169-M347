@@ -1,0 +1,60 @@
+Dockerfile
+
+# Maven build directory
+/target/
+
+# Eclipse project files
+/.classpath
+/.project
+/.settings/
+
+# IntelliJ IDEA project files
+/.idea/
+/*.iml
+
+# NetBeans project files
+/nbproject/
+
+# JRebel
+/.jrebel/
+
+# VS Code project files
+.vscode/
+
+# Maven Wrapper
+/.mvn/
+mvnw
+mvnw.cmd
+
+# Logs
+/logs/
+/log/
+
+# Temporary files
+*.log
+*.bak
+*.swp
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Java class files
+*.class
+
+# JetBrains IDE files
+.idea/
+
+# Gradle wrapper (in case of mixed projects)
+.gradle/
+
+# Generated files
+*.jar
+*.war
+*.ear
+
+# Local configuration files (optional, depends on your project setup)
+*.iml
+
+# Dependency directory (if not using Maven)
+lib/
