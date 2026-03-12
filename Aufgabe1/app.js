@@ -1,17 +1,12 @@
-// Sample node.js web app for Pluralsight Docker CI course
-// For demonstration purposes only
-'use strict';
-const path = require('path');
+import express from "express";
 
-var express = require('express'),
-    app = express();
+const app = express();
 
-app.set('views', 'views');
-app.set('view engine', 'pug');
-
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get("/", (req, res) => {
+  res.send("Hello, bundled world!");
 });
 
-app.listen(8080);
-module.exports.getApp = app;
+const port = 8080;
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});

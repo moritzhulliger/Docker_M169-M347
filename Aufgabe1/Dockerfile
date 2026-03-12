@@ -1,22 +1,20 @@
-FROM alpine:latest
+FROM node:20-bullseye-slim
 
 LABEL maintainer="test@gmail.com"
 
-# Install Node and NPM
-RUN apk add --update nodejs npm curl
+WORKDIR /app
 
-# Copy app to /src
-COPY . /src
+COPY package*.json ./
 
-WORKDIR /src
+RUN npm install
 
-# Install dependencies
-RUN  npm install
+COPY . .
 
-EXPOSE 8080
+RUN npm run build
 
-# Use a non-root user for security
-RUN adduser -D -h /src appuser && chown -R appuser /src
+RUN adduser --disabled-password --gecos "" appuser && chown -R appuser /app
 USER appuser
 
-ENTRYPOINT ["node", "./app.js"]
+EXPOSE 8084
+
+CMD ["node", "dist/app.mjs"]
