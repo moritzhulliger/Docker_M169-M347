@@ -1,4 +1,5 @@
 import os
+import time
 import requests
 from flask import Flask, render_template, request, jsonify
 import base64
@@ -22,43 +23,60 @@ def upload():
         file = request.files['image']
         file.seek(0)
 
+        total_start = time.perf_counter()
+
+        ocr_start = time.perf_counter()
         ocr_response = requests.post(
-            OCR_SERVICE_URL, 
+            OCR_SERVICE_URL,
             files={'file': (file.filename, file.stream, file.content_type)}
         )
-        
+        ocr_end = time.perf_counter()
+
         print(f"Status: {ocr_response.status_code}")
         print(f"Content: {ocr_response.text}") # Das zeigt dir, was wirklich zurückkam
 
+        raw_text = None
         if ocr_response.status_code == 200:
             raw_text = ocr_response.json().get('text')
-            
+
         if not raw_text:
             return jsonify({"error": "Kein Text im Bild erkannt"}), 500
 
-        correction_prompt = f"HIER DEN PROMPT SCHREIBE: {raw_text}"
-        
+        correction_start = time.perf_counter()
+        correction_prompt = f"DEINE_AUFGABE {raw_text}"
         brain_response = requests.post(LLM_CORRECTION_URL, json={
-            "model": "HIER MODELLE EINTRAGEN",
+            "model": "DEINE_AUFGABE",
             "prompt": correction_prompt,
             "stream": False
         })
         corrected_text = brain_response.json().get('response', '')
+        correction_end = time.perf_counter()
+
         target_lang = 'German'
-        translation_prompt = f"HIER DEN PROMPT SCHREIBEN {target_lang}: {corrected_text}"
-        
+        translation_start = time.perf_counter()
+        translation_prompt = f"DEINE_AUFGABE {target_lang}: {corrected_text}"
         tongue_response = requests.post(LLM_TRANSLATION_URL, json={
-            "model": "HIER MODELLE EINTRAGEN",
+            "model": "DEINE_AUFGABE",
             "prompt": translation_prompt,
             "stream": False
         })
         final_translation = tongue_response.json().get('response', '')
+        translation_end = time.perf_counter()
+
+        total_end = time.perf_counter()
 
         return jsonify({
             "status": "success",
+            "ocr": raw_text,
             "raw": raw_text,
             "corrected": corrected_text,
-            "translated": final_translation
+            "translated": final_translation,
+            "times": {
+                "ocr": f"{ocr_end - ocr_start:.2f}s",
+                "correction": f"{correction_end - correction_start:.2f}s",
+                "translation": f"{translation_end - translation_start:.2f}s",
+                "total": f"{total_end - total_start:.2f}s"
+            }
         })
 
     except requests.exceptions.ConnectionError as e:
