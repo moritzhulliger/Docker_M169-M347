@@ -34,6 +34,8 @@ Erstelle ein `docker-compose.yml`, sodass jeder Dienst sein eigenes Image bekomm
 ### Schritt 4: Vergleicht verschiedene Modelle
 Sucht auf Huggingface verschiedene Modelle, tauscht diese aus und beobachtet die Resultate (Performance in Sachen Zeit aber auch Qualität).
 
+Dokumentiere deine Ergebnisse
+
 ### Schritt 5: Macht OCR auch mit einem LLM
 Baut den Schritt von OCR um, so dass ihr auch den Ollama Container mit einem Image Modell aufruft.
 
