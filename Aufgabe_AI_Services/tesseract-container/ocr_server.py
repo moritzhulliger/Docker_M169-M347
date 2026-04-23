@@ -14,7 +14,7 @@ def do_ocr():
     image = Image.open(io.BytesIO(file.read()))
     
     # Nutzt Deutsch und Englisch für bessere Erkennung
-    text = pytesseract.image_to_string(image, lang='deu+eng')
+    text = pytesseract.image_to_string(image, lang='deu')
     
     return jsonify({"text": text.strip()})
 

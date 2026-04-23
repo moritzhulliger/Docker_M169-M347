@@ -48,7 +48,7 @@ def upload():
             "model": "DEINE_AUFGABE",
             "prompt": correction_prompt,
             "stream": False
-        })
+        },timeout=30) # Je nach Modell musst du hier das Timeout anpassen
         corrected_text = brain_response.json().get('response', '')
         correction_end = time.perf_counter()
 
@@ -59,7 +59,7 @@ def upload():
             "model": "DEINE_AUFGABE",
             "prompt": translation_prompt,
             "stream": False
-        })
+        },timeout=30) # Je nach Modell musst du hier das Timeout anpassen
         final_translation = tongue_response.json().get('response', '')
         translation_end = time.perf_counter()
 
