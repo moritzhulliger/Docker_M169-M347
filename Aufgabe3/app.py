@@ -5,7 +5,7 @@ class MyHandler(SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        self.wfile.write(b"<h1>Hello from  inside the container!</h1>")
+        self.wfile.write(b"<h1>Hello from  inside the container!!!</h1>")
 
 if __name__ == "__main__":
     server_address = ("", 8080)  # Listen on all available interfaces, port 8080
